@@ -59,6 +59,9 @@
             </div>
         </div>
     </nav>
+    
+    <!-- PROFILE SECTION -->
+
     <section id="profile">
         <div class="section__pic-container">
             <img src="./assets/profile-pic2-circle.png" alt="paul roden jr profile picture">
@@ -106,6 +109,9 @@
         </div>
         <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='#experience'">
     </section>
+    
+    <!-- EXPERIENCE SECTION -->
+
     <section id="experience">
         <p class="section__text__p1">Explore My</p>
         <h1 class="title">Experience</h1>
@@ -209,6 +215,9 @@
         </div>
         <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='#projects'">
     </section>
+    
+    <!-- PROJECTS SECTION -->
+
     <section id="projects">
         <p class="section__text__p1">Browse My Recent</p>
         <h1 class="title">Projects</h1>
@@ -256,20 +265,34 @@
 </div>
 <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='#contact'"/>
 </section>
+
+<!-- CONTACT SECTION -->
+
 <section id="contact">
     <p class="section__text__p1">Get in Touch</p>
     <h1 class="title">Contact Me</h1>
-    <div class="contact-info-upper-container">
-        <div class="contact-info-container">
-            <img src="./assets/email.png" alt="Email icon" class="icon contact-icon email-icon">
-            <p><a href="mailto:contact@paulrodenjr.dev">contact@paulrodenjr.dev</a></p>
-        </div>
-        <div class="contact-info-container">
-            <img src="./assets/linkedin.png" alt="Linkedin icon" class="icon contact-icon">
-            <p><a href="https://www.linkedin.com/in/paul-roden-4a1395167/">Linkedin</a></p>
-        </div>
+    <div class="contact-form-container">
+        <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <div class="form-group">
+                <label for="name">Name*</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email*</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message*</label>
+                <textarea id="message" name="message" rows="6" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-color-1 form-submit-btn">Send Message</button>
+            <p id="form-status" class="form-status"></p>
+        </form>
     </div>
 </section>
+
+<!-- FOOTER -->
+
 <footer>
     <nav>
         <div class="nav-links-container">
@@ -282,8 +305,41 @@
             </ul>
         </div>
     </nav>
-    <p>Copyright &#169; 2025 Paul Roden Jr. All Rights Reserved.</p>
+    <p>Copyright &#169; <span data-current-year>2026</span> Paul Roden Jr. - All Rights Reserved.</p>
 </footer>
 <script src="script.js"></script>
+<script>
+    const contactForm = document.getElementById("contact-form");
+    const formStatus = document.getElementById("form-status");
+
+    if (contactForm) {
+        contactForm.addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const data = new FormData(contactForm);
+            formStatus.textContent = "Sending...";
+            formStatus.className = "form-status";
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: "POST",
+                    body: data,
+                    headers: { "Accept": "application/json" }
+                });
+
+                if (response.ok) {
+                    formStatus.textContent = "Thanks! Your message has been sent.";
+                    formStatus.className = "form-status success";
+                    contactForm.reset();
+                } else {
+                    formStatus.textContent = "Something went wrong. Please try again or email me directly.";
+                    formStatus.className = "form-status error";
+                }
+            } catch (error) {
+                formStatus.textContent = "Something went wrong. Please try again or email me directly.";
+                formStatus.className = "form-status error";
+            }
+        });
+    }
+</script>
 </body>
 </html>
