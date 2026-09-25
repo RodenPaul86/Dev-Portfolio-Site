@@ -272,17 +272,18 @@
     <p class="section__text__p1">Get in Touch</p>
     <h1 class="title">Contact Me</h1>
     <div class="contact-form-container">
-        <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="d0527fa2-e477-4ac8-a493-a8ee7701d28a">
             <div class="form-group">
-                <label for="name">Name*</label>
+                <label for="name">Name</label>
                 <input type="text" id="name" name="name" required>
             </div>
             <div class="form-group">
-                <label for="email">Email*</label>
+                <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
             </div>
             <div class="form-group">
-                <label for="message">Message*</label>
+                <label for="message">Message</label>
                 <textarea id="message" name="message" rows="6" required></textarea>
             </div>
             <button type="submit" class="btn btn-color-1 form-submit-btn">Send Message</button>
@@ -326,16 +327,17 @@
                     headers: { "Accept": "application/json" }
                 });
 
-                if (response.ok) {
+                const result = await response.json();
+                if (result.success) {
                     formStatus.textContent = "Thanks! Your message has been sent.";
                     formStatus.className = "form-status success";
                     contactForm.reset();
                 } else {
-                    formStatus.textContent = "Something went wrong. Please try again or email me directly.";
+                    formStatus.textContent = "Something went wrong. Please try again.";
                     formStatus.className = "form-status error";
                 }
             } catch (error) {
-                formStatus.textContent = "Something went wrong. Please try again or email me directly.";
+                formStatus.textContent = "Something went wrong. Please try again.";
                 formStatus.className = "form-status error";
             }
         });
